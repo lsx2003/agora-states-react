@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import "./style.css";
+import MainSection from "./Components/MainSection";
+import Header from "./Components/Header";
+import Discussion from "./Components/Discussion";
+import { useEffect, useState } from "react";
+import Pagination from "./Components/Pagination";
+import Posts from "./Components/Post";
 
 function App() {
+  const [discussions, setDiscussions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage;
+  const currentPosts = (posts) => {
+    let currentPosts = 0;
+    currentPosts = posts.slice(indexOfFirst, indexOfLast);
+    return currentPosts;
+  };
+
+  useEffect(() => {
+    const fetchData = fetch("http://localhost:4000/")
+      .then((data) => {
+        setLoading(true);
+        return data.json();
+      })
+      .then((data) => setDiscussions(data));
+    setLoading(false);
+  }, []);
+  console.log(discussions);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header></Header>
+      <MainSection />
+      <Discussion posts={currentPosts(discussions)} loading={loading} />
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={discussions.length}
+        paginate={setCurrentPage}
+      ></Pagination>
+    </>
   );
 }
 
