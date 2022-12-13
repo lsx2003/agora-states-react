@@ -1,4 +1,20 @@
+import { useCallback } from "react";
+import { BsXCircleFill } from "react-icons/bs";
+import Toggle from "./Toggle";
+
 export default function Discussion({ posts }) {
+  const deletehandler = async (event) => {
+    const id = event.target.parentNode.parentNode.id;
+    await fetch(`http://localhost:4000/${id}`, {
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    await window.location.replace("/");
+  };
+  useCallback(deletehandler, []);
+
   return (
     <>
       {posts.map((discussion) => {
@@ -15,12 +31,16 @@ export default function Discussion({ posts }) {
                 </div>
 
                 <div className="discussion__content">
-                  <h2 className="discussion__title">
+                  <h2 className="discussion__title" id={discussion.id}>
                     <a href={discussion.url}>{discussion.title} </a>
+                    <BsXCircleFill className="delete" onClick={deletehandler}>
+                      {discussion.id}
+                    </BsXCircleFill>
+                    <Toggle></Toggle>
+                    <div className="discussion__information">
+                      {discussion.author} /{discussion.createdAt.slice(0, 10)}
+                    </div>
                   </h2>
-                  <div className="discussion__information">
-                    {discussion.author} /{discussion.createdAt.slice(0, 10)}
-                  </div>
                 </div>
                 <div className="discussion__answered">
                   <p></p>

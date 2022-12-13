@@ -189,11 +189,15 @@ li {
   font-weight: 300;
   float: right;
   color: white;
-  margin-top: 5px;
+  margin: 0px;
 }
 
 .discussion__title {
   font-size: 90%;
+  margin-top: 0;
+  padding: 10px;
+  margin-top: 2px;
+  padding-bottom: 0;
 }
 
 .discussion__title a {
@@ -242,9 +246,10 @@ section.form__container {
 .form__input--title input {
   width: 370px;
   width: 370px;
-  height: 30%;
+  height: 40%;
   font-size: 20px;
   margin: 10px 0;
+
   border: 0;
   border-radius: 8px;
   outline: none;
@@ -389,4 +394,23 @@ nav {
 .pagination i {
   color: white;
   font-size: 25px;
+}
+
+.toggle-wrapper {
+  display: flex;
+  padding-top: 5px;
+  align-items: center;
+}
+
+.toggle {
+  font-size: 15px;
+  color: #e67e22;
+  margin-top: 1px;
+  margin-left: 5px;
+  margin-right: 3px;
+}
+
+.delete {
+  color: #c0392b;
+  margin-left: 13px;
 }
